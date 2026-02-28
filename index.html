@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JNUAF 2026 - Le Numérique Évolue</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+        .bg-jnuaf-green { background-color: #16a34a; }
+        .text-jnuaf-green { color: #16a34a; }
+        .bg-jnuaf-orange { background-color: #f97316; }
+        .text-jnuaf-orange { color: #f97316; }
+        .border-jnuaf-orange { border-color: #f97316; }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- NARRATIVE PLAN: 1. Hero/Hook (Tech Evolution) -> 2. Context Data (Line Chart: Women in Tech Growth) -> 3. Inclusion Goals (Donut Chart: Target Audience) -> 4. Event Pillars (HTML Cards) -> 5. Outro & Partners. PALETTE: "Energetic Orange & Green" (ESEO/JNUAF colors: #16a34a, #f97316). VISUAL CHOICES: Line chart for temporal trend, Donut chart for audience composition. CONFIRMATION: NO SVG and NO MERMAID JS were used anywhere in this output. -->
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center font-black text-2xl tracking-tighter">
+                    <span class="text-jnuaf-orange">JNU</span><span class="text-jnuaf-green">AF</span> <span class="ml-2 text-gray-900">2026</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#contexte" class="text-gray-600 hover:text-jnuaf-orange font-semibold transition-colors">Le Contexte</a>
+                    <a href="#objectifs" class="text-gray-600 hover:text-jnuaf-green font-semibold transition-colors">Nos Objectifs</a>
+                    <a href="#programme" class="text-gray-600 hover:text-jnuaf-orange font-semibold transition-colors">Le Programme</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative bg-gray-900 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black opacity-90"></div>
+        <div class="absolute inset-0" style="background-image: radial-gradient(#4b5563 1px, transparent 1px); background-size: 30px 30px; opacity: 0.2;"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 text-center">
+            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight mb-6 uppercase glitch-text">
+                Le Numérique Évolue.<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-orange-500">Et si vous en étiez les actrices ?</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 font-light">
+                Rejoignez le mouvement. L'événement tech 100% féminin dédié à l'innovation, l'inspiration et l'inclusion, organisé par le Club IT ESEO.
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <span class="px-8 py-4 bg-jnuaf-orange text-white font-bold rounded-full shadow-lg shadow-orange-500/30 uppercase tracking-wide text-sm">Inspirer</span>
+                <span class="px-8 py-4 bg-jnuaf-green text-white font-bold rounded-full shadow-lg shadow-green-500/30 uppercase tracking-wide text-sm">Innover</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+
+        <section id="contexte" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-gray-900 uppercase tracking-wide">Un Monde d'Opportunités</h2>
+                <div class="w-24 h-1 bg-jnuaf-orange mx-auto mt-4 mb-6"></div>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    Le secteur des technologies de l'information et de la communication (TIC) offre des opportunités immenses. Bien que les femmes y restent sous-représentées, leur participation connaît une croissance encourageante qu'il faut accélérer.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Évolution des travailleuses dans les TIC</h3>
+                    <p class="text-sm text-gray-500 mb-6">Une amélioration significative observée sur une décennie, marquant la nécessité de poursuivre les efforts.</p>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-orange-50 p-6 rounded-xl border-l-4 border-jnuaf-orange">
+                        <div class="text-4xl mb-4">&#x1F4C8;</div>
+                        <h4 class="text-lg font-bold text-gray-900">Une croissance continue</h4>
+                        <p class="text-gray-600 mt-2">En 10 ans, la part des femmes dans les métiers de la tech a dépassé la barre des 30%. Les barrières à l'entrée diminuent grâce aux initiatives d'inclusion.</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl border-l-4 border-jnuaf-green">
+                        <div class="text-4xl mb-4">&#x1F31F;</div>
+                        <h4 class="text-lg font-bold text-gray-900">L'Opportunité ESEO</h4>
+                        <p class="text-gray-600 mt-2">Capter cette croissance en se positionnant comme l'école de référence pour les jeunes femmes scientifiques et passionnées par le digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="objectifs" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-gray-900 uppercase tracking-wide">Une Approche Radicale & Inclusive</h2>
+                <div class="w-24 h-1 bg-jnuaf-green mx-auto mt-4 mb-6"></div>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    Notre ambition n'est pas seulement de rassembler les expertes, mais d'ouvrir les portes du numérique à celles qui n'ont pas encore osé franchir le pas.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center hover:-translate-y-1 transition-transform">
+                        <div class="text-4xl mb-3">&#x1F52E;</div>
+                        <h4 class="font-bold text-gray-900">Démystifier</h4>
+                        <p class="text-sm text-gray-600 mt-2">Rendre les métiers de l'ingénieur accessibles aux novices.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center hover:-translate-y-1 transition-transform">
+                        <div class="text-4xl mb-3">&#x1F4A1;</div>
+                        <h4 class="font-bold text-gray-900">Inspirer</h4>
+                        <p class="text-sm text-gray-600 mt-2">Rencontrer des "Role Models" impactant positivement la communauté.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center hover:-translate-y-1 transition-transform">
+                        <div class="text-4xl mb-3">&#x1F4BB;</div>
+                        <h4 class="font-bold text-gray-900">Former</h4>
+                        <p class="text-sm text-gray-600 mt-2">Faciliter l'accès aux compétences via des ateliers pratiques.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100 text-center hover:-translate-y-1 transition-transform">
+                        <div class="text-4xl mb-3">&#x1F91D;</div>
+                        <h4 class="font-bold text-gray-900">Connecter</h4>
+                        <p class="text-sm text-gray-600 mt-2">Mettre en relation direct les étudiantes et les recruteurs.</p>
+                    </div>
+                </div>
+
+                <div class="order-1 md:order-2 bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Objectif d'Audience RA2</h3>
+                    <p class="text-sm text-gray-500 mb-6">Répartition visée pour susciter de nouvelles vocations technologiques.</p>
+                    <div class="chart-container">
+                        <canvas id="inclusionChart"></canvas>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <span class="inline-block px-4 py-2 bg-gray-100 rounded-lg text-sm font-semibold text-gray-800">Cible Prioritaire : Minimum 25% de novices absolues</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="programme" class="scroll-mt-20">
+            <div class="bg-gray-900 rounded-3xl p-8 md:p-16 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-16 -mr-16 text-9xl opacity-5 text-white">&#x2699;</div>
+                <div class="relative z-10 text-center mb-12">
+                    <h2 class="text-3xl font-black text-white uppercase tracking-wide">Une Expérience Multidimensionnelle</h2>
+                    <div class="w-24 h-1 bg-jnuaf-orange mx-auto mt-4 mb-6"></div>
+                    <p class="max-w-2xl mx-auto text-lg text-gray-400">
+                        Une journée d'immersion complète alliant théorie inspirante, pratique technique et opportunités professionnelles.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+                    <div class="bg-gray-800 rounded-2xl p-8 border-t-4 border-jnuaf-orange">
+                        <div class="text-5xl mb-6">&#x1F3A4;</div>
+                        <h3 class="text-xl font-bold text-white mb-3">Conférences & Panels</h3>
+                        <p class="text-gray-400">Retours d'expérience poignants, débats sur l'IA et la cybersécurité avec des femmes leaders de l'industrie.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-2xl p-8 border-t-4 border-jnuaf-green">
+                        <div class="text-5xl mb-6">&#x1F469;&#x200D;&#x1F4BB;</div>
+                        <h3 class="text-xl font-bold text-white mb-3">Ateliers Pratiques</h3>
+                        <p class="text-gray-400">Initiation technique intensive : Coding, Data Visualisation, IoT et développement de Soft Skills.</p>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-2xl p-8 border-t-4 border-jnuaf-orange">
+                        <div class="text-5xl mb-6">&#x1F3E2;</div>
+                        <h3 class="text-xl font-bold text-white mb-3">Exposition & Mentoring</h3>
+                        <p class="text-gray-400">Stands partenaires, démonstrations de projets étudiants, et speed-dating avec alumni et recruteurs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter mb-4">TRÈS BIENTÔT</h2>
+            <p class="text-2xl font-bold text-jnuaf-green uppercase tracking-widest mb-12">Campus ESEO Paris-Vélizy</p>
+            
+            <div class="mb-12">
+                <p class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6">En collaboration avec nos partenaires institutionnels</p>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70 grayscale">
+                    <span class="text-2xl font-black tracking-tighter">THALES</span>
+                    <span class="text-2xl font-bold tracking-tight">Capgemini</span>
+                    <span class="text-2xl font-bold font-serif">ANSSI</span>
+                    <span class="text-2xl font-bold">SIEMENS</span>
+                </div>
+            </div>
+
+            <div class="mt-16 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-500 text-sm">
+                    &copy; 2026 Club IT ESEO. Journée du Numérique au Féminin.
+                </div>
+                <div class="mt-4 md:mt-0 space-x-4">
+                    <span class="text-gray-400 font-medium">Inspirer</span>
+                    <span class="text-gray-400 font-medium">&bull;</span>
+                    <span class="text-gray-400 font-medium">Échanger</span>
+                    <span class="text-gray-400 font-medium">&bull;</span>
+                    <span class="text-gray-400 font-medium">Innover</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function wrapLabel(labelString) {
+            if (labelString.length > 16) {
+                const words = labelString.split(' ');
+                const lines = [];
+                let currentLine = '';
+
+                words.forEach(word => {
+                    if ((currentLine + word).length > 16) {
+                        if (currentLine.trim() !== '') {
+                            lines.push(currentLine.trim());
+                        }
+                        currentLine = word + ' ';
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+                if (currentLine.trim() !== '') {
+                    lines.push(currentLine.trim());
+                }
+                return lines;
+            }
+            return labelString;
+        }
+
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        const rawTrendLabels = ["Bilan de l'Année 2013", "Projection de l'Année 2023"];
+        const wrappedTrendLabels = rawTrendLabels.map(wrapLabel);
+
+        const ctxTrend = document.getElementById('trendChart').getContext('2d');
+        new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+                labels: wrappedTrendLabels,
+                datasets: [{
+                    label: 'Part des femmes dans les TIC (%)',
+                    data: [24, 30.5],
+                    borderColor: '#f97316',
+                    backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#16a34a',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltipConfig
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 20,
+                        max: 35,
+                        grid: { borderDash: [5, 5], color: '#e5e7eb' },
+                        ticks: { callback: function(value) { return value + '%'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        const rawInclusionLabels = ["Novices ciblées pour la découverte", "Étudiantes & Professionnelles Tech"];
+        const wrappedInclusionLabels = rawInclusionLabels.map(wrapLabel);
+
+        const ctxInclusion = document.getElementById('inclusionChart').getContext('2d');
+        new Chart(ctxInclusion, {
+            type: 'doughnut',
+            data: {
+                labels: wrappedInclusionLabels,
+                datasets: [{
+                    data: [25, 75],
+                    backgroundColor: [
+                        '#f97316', 
+                        '#16a34a'  
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 20, font: { family: 'Inter' } }
+                    },
+                    tooltip: commonTooltipConfig
+                }
+            },
+            plugins: [{
+                id: 'centerText',
+                beforeDraw: function(chart) {
+                    var width = chart.width,
+                        height = chart.height,
+                        ctx = chart.ctx;
+            
+                    ctx.restore();
+                    var fontSize = (height / 114).toFixed(2);
+                    ctx.font = "bold " + fontSize + "em Inter";
+                    ctx.textBaseline = "middle";
+                    ctx.fillStyle = "#1f2937";
+            
+                    var text = "25% Min",
+                        textX = Math.round((width - ctx.measureText(text).width) / 2),
+                        textY = (height / 2) - 10;
+            
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }]
+        });
+    </script>
+</body>
+</html>
